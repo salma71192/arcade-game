@@ -76,6 +76,54 @@ Player.prototype.handleInput = function(keyPress) {
 };
 
 
+let lives = 4;
+// check collision between player and enemy
+function collision(enemy) {
+    if (player.y + 131 >= enemy.y + 90
+        && player.x + 25 <= enemy.x + 88
+        && player.y + 73 <= enemy.y + 135
+        && player.x + 76 >= enemy.x + 11) {
+        player.x = 200;
+        player.y = 408;
+        // decrease player lives
+        lives--;
+    }
+    // player loses if lives = 0
+    if(lives === 0) {
+        alert('you Lose!');
+        // Reset the game
+        lives = 4;
+        score = 0;
+    }
+}
+
+// increase score and difficulty each time player reach water
+function levelOfDifficulty() {
+    if(score < 8) {
+        score++;
+        // reset all enemies to 0 to create new ones
+        allEnemies = [];
+        // create enemies according to score
+        for (let i = 0; i < score; i++) {
+            enemy = new Enemy(0, Math.random() * 180 + 50, Math.random() * 200);
+            allEnemies.push(enemy);
+        }
+    // player end the game
+    } else if (score === 8) {
+        alert('You won');
+        // reset the game to start
+        score = 0;
+        lives = 4;
+    }
+}
+
+// new played intance
+let player = new Player(200, 408, 83);
+// array to collect enemies
+let allEnemies = [];
+// new enemy instance
+let enemy = new Enemy(0, Math.random() * 180 + 50, Math.random() * 200);
+allEnemies.push(enemy);
 
 
 
